@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophia</title>
+  <style>
+    h1 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #333;
+    }
+
+    .menu {
+      list-style: none;
+      justify-content: center;
+      margin-top: 20px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .menu li {
+      padding: 10px 20px;
+      color: #fff;
+    }
+
+    .menu li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .menu li a:hover {
+      background-color: #483D8B;
+    }
+
+    .menu li a.active {
+      background-color: #555;
+    }
+
+    footer {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    footer a:hover {
+      background-color: #8878c3;
+      color: #fff;
+    }
+
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    
+  </style>
+
+  <meta http-equiv="Cache-Control" content="max-age=600">
+</head>
+<body>
+  <h1>Sophia</h1>
+
+  <nav>
+    <ul class="menu">
+      <li><a href="liam.html">Liam</a></li>
+      <li><a href="noah.html">Noah</a></li>
+      <li><a href="olivia.html">Olivia</a></li>
+      <li><a href="oliver.html">Oliver</a></li>
+      <li><a href="emma.html">Emma</a></li>
+      <li><a href="charlotte.html">Charlotte</a></li>
+      <li><a href="amelia.html">Amelia</a></li>
+      <li>Sophia</li>
+      <li><a href="james.html">James</a></li>
+      <li><a href="elijah.html">Elijah</a></li>
+   </ul>
+  </nav>
+  <br><br><br><br>
+  <div class="chart-container">
+    <svg id="line-chart" width="800" height="500"></svg>
+  </div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+
+    d3.csv('sophia.csv', function(d) {
+      return {
+        name: d.Name,
+        gender: d.Gender,
+        count: +d.Count,
+        year: +d.Year,
+      };
+    })
+      .then(function(data) {
+        console.log(data);
+
+        const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+        const width = 800 - margin.left - margin.right;
+        const height = 500 - margin.top - margin.bottom;
+
+        const svg = d3.select('#line-chart')
+          .append('g')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+        const xScale = d3.scaleLinear()
+          .domain(d3.extent(data, d => d.year))
+          .range([0, width]);
+
+        const yScale = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.count)])
+          .range([height, 0]);
+
+        const xAxis = d3.axisBottom(xScale).tickFormat(d3.format('d'));
+        const yAxis = d3.axisLeft(yScale);
+
+        svg.append('g')
+          .attr('class', 'x-axis')
+          .attr('transform', `translate(0, ${height})`)
+          .call(xAxis);
+
+        svg.append('g')
+          .attr('class', 'y-axis')
+          .call(yAxis);
+
+        const line = d3.line()
+          .x(d => xScale(d.year))
+          .y(d => yScale(d.count));
+
+        // Line
+        svg.append('path')
+          .datum(data)
+          .attr('class', 'line')
+          .attr('d', line)
+          .attr('fill', 'none')
+          .attr('stroke', 'blue') 
+          .attr('stroke-width', 2);
+
+        // Points
+        svg.selectAll('.dot')
+          .data(data)
+          .enter()
+          .append('circle')
+          .attr('class', 'dot')
+          .attr('cx', d => xScale(d.year))
+          .attr('cy', d => yScale(d.count))
+          .attr('r', 5)
+          .attr('fill', 'red') 
+
+        const tooltip = d3.select('body')
+          .append('div')
+          .attr('class', 'tooltip')
+          .style('opacity', 0)
+          .style('position', 'absolute')
+          .style('pointer-events', 'none')
+          .style('background-color', 'white')
+          .style('padding', '5px')
+          .style('border', '1px solid #ccc');
+
+        svg.selectAll('.dot')
+          .on('mouseover', function(event, d) {
+            tooltip.html(`Year: ${d.year}<br>Count: ${d.count}`);
+            tooltip.style('opacity', 1);
+          })
+          .on('mousemove', function(event) {
+            tooltip.style('left', event.pageX + 10 + 'px');
+            tooltip.style('top', event.pageY + 10 + 'px');
+          })
+          .on('mouseout', function() {
+            tooltip.style('opacity', 0);
+          });
+
+        // Graph Title
+        svg.append('text')
+          .attr('x', width / 2)
+          .attr('y', -20)
+          .attr('text-anchor', 'middle')
+          .style('font-size', '20px')
+          .text('Name Count History: Sophia');
+
+      })
+      .catch(function(error) {
+        console.log('Error loading the data:', error);
+      });
+
+    
+
+    document.addEventListener('DOMContentLoaded', function () {
+      if (navigator.userAgentData && navigator.userAgentData.platform) {
+        const platform = navigator.userAgentData.platform;
+        console.log('Platform:', platform);
+
+      } else {
+        console.log('Fallback: No access to platform information.');
+      }
+    });
+  </script>
+  <meta http-equiv="Cache-Control" content="max-age=600">
+
+  <footer>
+    <a href="index.html">Home</a>
+  </footer>
+  
+</body>
+</html>

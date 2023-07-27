@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 10 Popular Names in 2022</title>
+  <style>
+    h1 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #333;
+      color: #fff
+    }
+
+    .menu {
+      list-style: none;
+      justify-content: center;
+      margin-top: 20px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .menu li {
+      padding: 10px 20px;
+    }
+
+    .menu li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .menu li a:hover {
+      background-color: #483D8B;
+    }
+
+    .menu li a.active {
+      background-color: #555;
+    }
+    
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 85vh;
+      margin-bottom: 0;
+    }
+
+    .bubble {
+      fill-opacity: 0.7;
+      transition: fill-opacity 0.3s;
+    }
+
+    .bubble:hover {
+      fill-opacity: 1;
+    }
+
+    .bubble-label {
+      pointer-events: none;
+      text-anchor: middle;
+      font-size: 16px;
+    }
+  </style>
+
+  <meta http-equiv="Cache-Control" content="max-age=600">
+</head>
+<body>
+  <h1>Top 10 Popular Names in 2022</h1>
+
+  <nav>
+    <ul class="menu">
+      <li><a href="liam.html">Liam</a></li>
+      <li><a href="noah.html">Noah</a></li>
+      <li><a href="olivia.html">Olivia</a></li>
+      <li><a href="oliver.html">Oliver</a></li>
+      <li><a href="emma.html">Emma</a></li>
+      <li><a href="charlotte.html">Charlotte</a></li>
+      <li><a href="amelia.html">Amelia</a></li>
+      <li><a href="sophia.html">Sophia</a></li>
+      <li><a href="james.html">James</a></li>
+      <li><a href="elijah.html">Elijah</a></li>
+   </ul>
+  </nav>
+  
+  <div class="chart-container">
+    <svg id="bubble-chart" width="700" height="555"></svg>
+  </div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <script>
+   
+    const tooltip = d3
+      .select('body')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0)
+      .style('position', 'absolute')
+      .style('pointer-events', 'none')
+      .style('background-color', 'white')
+      .style('padding', '5px')
+      .style('border', '1px solid #ccc');
+
+    d3.csv('2022_pop.csv')
+      .then(function(data) {
+        const topNames2022Map = d3.group(data.filter(d => d.Year === "2022"), d => d.Name);
+        const topNames2022 = Array.from(topNames2022Map, ([name, group]) => ({ name, count: d3.sum(group, d => +d.Count), gender: group[0].Gender }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 10);
+        
+        createBubbleChart(topNames2022);
+      })
+      .catch(function(error) {
+        console.log('Error loading the data:', error);
+      });
+
+    function createBubbleChart(data) {
+      const svg = d3.select('#bubble-chart');
+      const width = +svg.attr('width');
+      const height = +svg.attr('height');
+
+      const countScale = d3.scaleSqrt()
+        .domain([0, d3.max(data, d => d.count)])
+        .range([5, 90]);
+
+      const colorScale = d3.scaleLinear()
+        .domain([d3.max(data, d => d.count), d3.min(data, d => d.count)])
+        .range(['#363b4e', '#927fbf']);
+   
+      const simulation = d3.forceSimulation(data)
+        .force('x', d3.forceX(width / 2))
+        .force('y', d3.forceY(height / 2))
+        .force('collide', d3.forceCollide(d => countScale(d.count) + 1))
+        .stop();
+
+      for (let i = 0; i < 100; ++i) {
+        simulation.tick();
+      }
+
+      // Bubble Chart
+      const bubbles = svg
+        .selectAll('.bubble')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'bubble')
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        .attr('r', d => countScale(d.count))
+        .style('fill', d => colorScale(d.count))
+        .on('mouseover', function (event, d) {
+          const tooltipContent = "Name: " + d.name + "<br>Gender: " + d.gender + "<br>Count: " + d.count;
+          tooltip.html(tooltipContent);
+          tooltip.style('opacity', 1);
+          tooltip.style('left', event.pageX + 10 + 'px');
+          tooltip.style('top', event.pageY + 10 + 'px');
+        })
+        .on('mouseout', function () {
+          tooltip.style('opacity', 0);
+        });
+
+      // Bubble Labels
+      svg.selectAll('.bubble-label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'bubble-label')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
+        .attr('dy', '0.35em')
+        .attr('text-anchor', 'middle')
+        .style('fill', 'white')
+        .style('stroke', 'black') 
+        .style('stroke-width', '1px') 
+        .style('paint-order', 'stroke fill')
+        .style('font-size', 16 + "px")
+        .text(d => d.name);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      if (navigator.userAgentData && navigator.userAgentData.platform) {
+        const platform = navigator.userAgentData.platform;
+        console.log('Platform:', platform);
+      } else {
+        console.log('Fallback: No access to platform information.');
+      }
+    });
+  </script>
+  <meta http-equiv="Cache-Control" content="max-age=600">
+
+</body>
+</html>

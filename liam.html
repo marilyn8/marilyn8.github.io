@@ -140,7 +140,7 @@
           .attr('class', 'line')
           .attr('d', line)
           .attr('fill', 'none')
-          .attr('stroke', 'blue') 
+          .attr('stroke', '#363b4e') 
           .attr('stroke-width', 2);
 
         // Points
@@ -152,7 +152,7 @@
           .attr('cx', d => xScale(d.year))
           .attr('cy', d => yScale(d.count))
           .attr('r', 5)
-          .attr('fill', 'red') 
+          .attr('fill', '#c4bbf0') 
 
         const tooltip = d3.select('body')
           .append('div')

@@ -86,7 +86,7 @@
   </nav>
   <br><br><br><br>
   <div class="chart-container">
-    <svg id="line-chart" width="830" height="510"></svg>
+    <svg id="line-chart" width="860" height="510"></svg>
   </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
@@ -188,9 +188,9 @@
         // X-axis Label
         svg.append('text')
           .attr('x', width / 2) 
-          .attr('y', height + margin.bottom + 20)
+          .attr('y', height + margin.bottom + 10)
           .attr('text-anchor', 'middle')
-          .style('font-size', '30px')
+          .style('font-size', '14px')
           .text('Year');
 
         // Y-axis Label

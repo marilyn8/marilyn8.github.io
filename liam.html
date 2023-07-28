@@ -120,7 +120,7 @@
           .range([height, 0]);
 
         const xAxis = d3.axisBottom(xScale).tickFormat(d3.format('d'));
-        const yAxis = d3.axisLeft(yScale);
+        const yAxis = d3.axisLeft(yScale).tickSize(-wdith);
 
         svg.append('g')
           .attr('class', 'x-axis')

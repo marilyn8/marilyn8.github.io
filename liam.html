@@ -64,6 +64,7 @@
       align-items: center;
       margin-bottom: 40px;
       position: relative;
+      left: 10px
     }
     
     .y-axis-label-container {
@@ -99,7 +100,7 @@
   <br><br><br><br>
 
   <div class="chart-container">
-    <svg id="line-chart" width="800" height="500"></svg>
+    <svg id="line-chart" width="800" height="520"></svg>
     <div class="y-axis-label-container">Count</div>
   </div>
   
@@ -206,7 +207,7 @@
         // X-axis Label
         svg.append('text')
           .attr('x', width / 2) 
-          .attr('y', height + margin.bottom - 8)
+          .attr('y', height + margin.bottom - 10)
           .attr('text-anchor', 'middle')
           .style('font-size', '14px')
           .text('Year');

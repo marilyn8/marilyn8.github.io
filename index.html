@@ -95,14 +95,7 @@
     <svg id="bubble-chart" width="700" height="555"></svg>
   </div>
 
-  <div>
-    <label for="year-slider">Select Year:</label>
-    <input type="range" id="year-slider" min="1880" max="2022" step="1" value="2022">
-    <span id="selected-year">2022</span>
-  </div>
-  
   <script src="https://d3js.org/d3.v7.min.js"></script>
-
   <script>
    
     const tooltip = d3
@@ -116,7 +109,18 @@
       .style('padding', '5px')
       .style('border', '1px solid #ccc');
 
-    let data;
+    d3.csv('2022_pop.csv')
+      .then(function(data) {
+        const topNames2022Map = d3.group(data.filter(d => d.Year === "2022"), d => d.Name);
+        const topNames2022 = Array.from(topNames2022Map, ([name, group]) => ({ name, count: d3.sum(group, d => +d.Count), gender: group[0].Gender }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 10);
+        
+        createBubbleChart(topNames2022);
+      })
+      .catch(function(error) {
+        console.log('Error loading the data:', error);
+      });
 
     function createBubbleChart(data) {
       const svg = d3.select('#bubble-chart');
@@ -180,66 +184,15 @@
         .style('font-size', 16 + "px")
         .text(d => d.name);
     }
-    
-    d3.csv('top10.csv').then(function(csvData) {
-      csvData.forEach(function(d) {
-        d.Year = +d.Year;
-        d.Count = +d.Count;
-      });
 
-      data = csvData;
-      
-      const countScale = d3.scaleSqrt()
-        .domain([0, d3.max(data, d => d.count)])
-        .range([5, 90]);
-
-      const colorScale = d3.scaleLinear()
-        .domain([d3.max(data, d => d.count), d3.min(data, d => d.count)])
-        .range(['#363b4e', '#927fbf']);
-      
-      const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-      const width = 800 - margin.left - margin.right;
-      const height = 600 - margin.top - margin.bottom;
-
-      const svg = d3.select('#bubble-chart')
-        .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-      d3.select('#year-slider').on('input', function() {
-        const selectedYear = +this.value;
-        d3.select('#selected-year').text(selectedYear);
-        updateChart(selectedYear);
-      });
-
-      updateChart(2022);
-    })
-    .catch(function(error) {
-      console.log('Error loading the data:', error);
-    });
-
-    function updateChart(selectedYear) {
-        const filteredData = data.filter(d => d.Year === selectedYear);
-
-        const bubbles = svg.selectAll('.bubble')
-          .data(filteredData, d => d.Name);
-
-        bubbles.exit().remove();
-
-        const newBubbles = bubbles.enter()
-          .append('circle')
-          .attr('class', 'bubble')
-          .style('fill', d => colorScale(d.count))
-
-        const mergedBubbles = newBubbles.merge(bubbles);
-      
-        mergedBubbles
-          .transition()
-          .duration(500)
-          .attr('cx', d => countScale(d.Count) + Math.random() * (width - 2 * countScale(d.Count)))
-          .attr('cy', d => countScale(d.Count) + Math.random() * (height - 2 * countScale(d.Count)))
-          .attr('r', d => countScale(d.count));
+    document.addEventListener('DOMContentLoaded', function () {
+      if (navigator.userAgentData && navigator.userAgentData.platform) {
+        const platform = navigator.userAgentData.platform;
+        console.log('Platform:', platform);
+      } else {
+        console.log('Fallback: No access to platform information.');
       }
-    
+    });
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">
 

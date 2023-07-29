@@ -47,22 +47,6 @@
       background-color: #555;
     }
 
-    .heatmap-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #337ab7;
-      color: #fff;
-      text-decoration: none;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .heatmap-button:hover {
-      background-color: #23527c;
-    }
-
     footer {
       text-align: center;
       font-family: Arial, sans-serif;
@@ -108,10 +92,6 @@
     <svg id="line-chart" width="800" height="500"></svg>
   </div>
 
-  <div>
-    <a href="liam_heatmap.html" class="heatmap-button">View Heatmap</a>
-  </div>
-  
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
 
@@ -233,16 +213,6 @@
         console.log('Error loading the data:', error);
       });
 
-    
-
-    document.addEventListener('DOMContentLoaded', function () {
-      if (navigator.userAgentData && navigator.userAgentData.platform) {
-        const platform = navigator.userAgentData.platform;
-        console.log('Platform:', platform);
-      } else {
-        console.log('Fallback: No access to platform information.');
-      }
-    });
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">
 

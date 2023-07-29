@@ -64,16 +64,6 @@
       align-items: center;
       margin-bottom: 40px;
     }
-
-    .y-axis-label {
-        font-size: 30px;
-        text-anchor: middle;
-        transform: rotate(-90);
-        position: absolute;
-        left: -50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
   </style>
 
   <meta http-equiv="Cache-Control" content="max-age=600">
@@ -211,9 +201,11 @@
 
         // Y-axis Label
         svg.append('text')
-          .attr('class', 'y-axis-label')
+          .attr('transform', 'rotate(-90)')
           .attr('x', -height / 2) 
           .attr('y', -margin.left + 5)
+          .attr('text-anchor', 'middle')
+          .style('font-size', '14px')
           .text('Count');
 
       })

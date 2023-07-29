@@ -217,7 +217,7 @@
         .enter()
         .append('g')
         .attr('class', 'legend-item')
-        .attr('transform', (d, i) => 'translate(0, ${i * 20})');
+        .attr('transform', (d, i) => 'translate(0,' + i * 20 + ')');
 
       legendItems.append('rect')
         .attr('x', 10)

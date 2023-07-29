@@ -211,7 +211,7 @@
         .style('font-size', 16 + "px")
         .text(d => d.name);
 
-      const legendItems = svg.selectAll('#legend-item')
+      const legendItems = svg.selectAll('#legend-items')
         .selectAll('.legend-item')
         .data(legendColorScale.ticks(5))
         .enter()

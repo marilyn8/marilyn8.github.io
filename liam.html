@@ -68,7 +68,6 @@
     
     .y-axis-label {
       line-height: 1.2;
-      writing-mode: tb;
       position: absolute;
       top: 50%;
       left: 260px; 
@@ -100,7 +99,9 @@
   <br><br><br><br>
   
   <div class="chart-container">
-    <div id="y-axis-label">Count</div>
+    <div class="y-axis-label-container">
+      <div id="y-axis-label">Count</div>
+    </div>
     <svg id="line-chart" width="800" height="500"></svg>
   </div>
 

@@ -71,6 +71,7 @@
       top: 55%;
       left: 260px;
       transform: rotate(-90deg) translateY(-50%);
+      font-size: 14px;
     }
   </style>
 
@@ -100,7 +101,7 @@
     <svg id="line-chart" width="800" height="500"></svg>
   </div>
 <div class="y-axis-label-container">
-  <span style="font-size: 14px;">Count</span>
+  <span>Count</span>
 </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
@@ -199,6 +200,7 @@
           .attr('y', -20)
           .attr('text-anchor', 'middle')
           .style('font-size', '20px')
+          .style('text-decoration', 'underline')
           .text('Name Count History: Liam');
 
         // X-axis Label

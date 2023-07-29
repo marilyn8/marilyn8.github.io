@@ -66,13 +66,16 @@
       position: relative;
     }
     
-    .y-axis-label {
-      line-height: 1.2;
+    .y-axis-label-container {
       position: absolute;
       top: 50%;
       left: 260px; 
-      font-size: 14px;
       writing-mode: vertical-lr;
+    }
+    .y-axis-label {
+      font-size: 14px;
+      transform: rotate(-90deg);
+      transform-origin: left center;
     }
   </style>
 

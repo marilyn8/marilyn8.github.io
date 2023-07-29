@@ -121,78 +121,71 @@
   <script>
 
     d3.csv('liam_state.csv').then(function(data) {
+      // Convert data types if needed
       data.forEach(function(d) {
         d.year = +d.Year;
         d.count = +d.Count;
       });
-
-      const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-      const width = 800 - margin.left - margin.right;
-      const height = 600 - margin.top - margin.bottom;
-
-      const svg = d3.select('#heatmap')
-        .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-      const minCount = d3.min(data, d => d.count);
-      const maxCount = d3.max(data, d => d.count);
-
-      const colorScale = d3.scaleLinear()
-        .domain([[minCount, maxCount])
-        .range(['#ffffff', '#ff0000']);
-
-      const countScale = d3
-        .scaleLinear()
-        .domain([minCount, maxCount])
-        .range([height, 0]); 
-
-      const heatmapY = (d) => countScale(d.Count);
       
-      const stateWidth = 10;
-      const stateHeight = 10; 
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const width = 800 - margin.left - margin.right;
+    const height = 600 - margin.top - margin.bottom;
 
-      svg.selectAll('rect')
-        .data(data)
-        .enter()
-        .append('rect')
-        .attr('x', (d, i) => (i % 10) * stateWidth)
-        .attr('y', (d, i) => Math.floor(i / 10) * stateHeight)
-        .attr('width', stateWidth)
-        .attr('height', stateHeight)
-        .attr('fill', d => colorScale(d.count))
-        .attr('stroke', '#ccc')
-        .attr('stroke-width', 1);
+    const svg = d3.select('#heatmap')
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    const stateWidth = 10;
+    const stateHeight = 10;
+
+    const colorScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.count)])
+        .range(['#ffffff', '#ff0000']);
+    
+    function updateHeatmap(selectedYear) {
+        const filteredData = data.filter(d => d.year === selectedYear);
+
+        const maxCount = d3.max(filteredData, d => d.count);
+        const countScale = d3.scaleLinear()
+          .domain([0, maxCount])
+          .range([height, 0]);
+
+        const heatmapRects = svg.selectAll('rect')
+          .data(filteredData, d => d.State);
+
+        heatmapRects.enter()
+          .append('rect')
+          .attr('x', d => xScale(d.State))
+          .attr('y', d => countScale(d.count))
+          .attr('width', stateWidth)
+          .attr('height', stateHeight)
+          .attr('fill', d => colorScale(d.count))
+          .attr('stroke', '#ccc')
+          .attr('stroke-width', 1);
+
+        heatmapRects
+          .attr('y', d => countScale(d.count))
+          .attr('fill', d => colorScale(d.count));
+      
+        heatmapRects.exit().remove();
+      }
+
+      const xScale = d3.scaleBand()
+        .domain(data.map(d => d.State))
+        .range([0, width])
+        .padding(0.1);
+      updateHeatmap(2022);
+
+      const yearSlider = document.getElementById('yearSlider');
+      yearSlider.addEventListener('input', function() {
+        const selectedYear = +yearSlider.value;
+        document.getElementById('selectedYear').textContent = selectedYear;
+        updateHeatmap(selectedYear);
+      });
     })
     .catch(function(error) {
       console.log('Error loading the data:', error);
     });
-
-    const slider = document.getElementById('year-slider');
-    
-    const selectedYearSpan = document.getElementById('selected-year');
-    
-    let selectedYear = 2022;
-    selectedYearSpan.textContent = selectedYear;
-
-    slider.addEventListener('input', function(event) {
-      selectedYear = parseInt(event.target.value);
-      selectedYearSpan.textContent = selectedYear;
-
-      updateHeatmap(selectedYear);
-    });
-
-    function updateHeatmap(selectedYear) {
-      const filteredData = heatmapData.filter(d => d.year === selectedYear);
-
-      const minCount = d3.min(filteredData, d => d.count);
-      const maxCount = d3.max(filteredData, d => d.count);
-      colorScale.domain([minCount, maxCount]);
-
-      svg.selectAll('rect')
-        .data(filteredData, d => d.State) 
-        .attr('fill', d => colorScale(d.count));
-    }
-    
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">
 

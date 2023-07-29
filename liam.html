@@ -64,7 +64,16 @@
       align-items: center;
       margin-bottom: 40px;
       position: relative;
-      margin-left: 200px;
+      margin-left: 50px;
+    }
+    
+    #y-axis-label {
+      transform: rotate(-90);
+      transform-origin: center;
+      position: absolute;
+      top: 50%;
+      left: -50px; 
+      font-size: 14px;
     }
   </style>
 
@@ -91,7 +100,8 @@
   <br><br><br><br>
   
   <div class="chart-container">
-    <svg id="line-chart" width="900" height="520"></svg>
+    <div id="y-axis-label">Count</div>
+    <svg id="line-chart" width="900" height="500"></svg>
   </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -201,14 +211,7 @@
           .style('font-size', '14px')
           .text('Year');
 
-        // Y-axis Label
-        svg.append('text')
-          .attr('transform', 'rotate(-90)')
-          .attr('x', -height / 2) 
-          .attr('y', -margin.left + 5)
-          .attr('text-anchor', 'middle')
-          .style('font-size', '14px')
-          .text('Count');
+        
 
       })
       .catch(function(error) {

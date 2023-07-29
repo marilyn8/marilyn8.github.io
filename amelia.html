@@ -63,6 +63,16 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 40px;
+      position: relative;
+    }
+
+    .y-axis-label-container {
+      position: relative;
+      top: 55%;
+      left: -810px;
+      transform: rotate(-90deg) translateY(-45%);
+      font-size: 14px;
+      text-anchor: middle;
     }
   </style>
 
@@ -88,6 +98,7 @@
   <br><br><br><br>
   <div class="chart-container">
     <svg id="line-chart" width="800" height="500"></svg>
+    <div class="y-axis-label-container">Count</div>
   </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
@@ -103,7 +114,7 @@
       .then(function(data) {
         console.log(data);
 
-        const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+        const margin = { top: 50, right: 35, bottom: 50, left: 65 };
         const width = 800 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
 
@@ -186,21 +197,18 @@
           .style('font-size', '20px')
           .text('Name Count History: Amelia');
 
+        // X-axis Label
+        svg.append('text')
+          .attr('x', width / 2) 
+          .attr('y', height + margin.bottom - 5)
+          .attr('text-anchor', 'middle')
+          .style('font-size', '14px')
+          .text('Year');
       })
       .catch(function(error) {
         console.log('Error loading the data:', error);
       });
 
-    
-
-    document.addEventListener('DOMContentLoaded', function () {
-      if (navigator.userAgentData && navigator.userAgentData.platform) {
-        const platform = navigator.userAgentData.platform;
-        console.log('Platform:', platform);
-      } else {
-        console.log('Fallback: No access to platform information.');
-      }
-    });
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">
 

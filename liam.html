@@ -63,8 +63,6 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 40px;
-      position: relative;
-      margin-left: 50px;
     }
     
     #y-axis-label {
@@ -73,7 +71,7 @@
       transform-origin: center;
       position: absolute;
       top: 50%;
-      left: 190px; 
+      left: 180px; 
       font-size: 14px;
     }
   </style>
@@ -102,7 +100,7 @@
   
   <div class="chart-container">
     <div id="y-axis-label">Count</div>
-    <svg id="line-chart" width="900" height="500"></svg>
+    <svg id="line-chart" width="800" height="500"></svg>
   </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -211,9 +209,6 @@
           .attr('text-anchor', 'middle')
           .style('font-size', '14px')
           .text('Year');
-
-        
-
       })
       .catch(function(error) {
         console.log('Error loading the data:', error);

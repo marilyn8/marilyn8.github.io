@@ -69,6 +69,14 @@
       text-anchor: middle;
       font-size: 16px;
     }
+
+    #legend {
+      position: absolute;
+      top: 50px; 
+      left: 50px; 
+      font-family: Arial, sans-serif;
+    }
+    
   </style>
 
   <meta http-equiv="Cache-Control" content="max-age=600">
@@ -183,6 +191,25 @@
         .style('paint-order', 'stroke fill')
         .style('font-size', 16 + "px")
         .text(d => d.name);
+
+      const legendItems = svgLegend.selectAll('.legend-item')
+        .data(legendColorScale.ticks(5))
+        .enter()
+        .append('g')
+        .attr('class', 'legend-item')
+        .attr('transform', (d, i) => `translate(0, ${i * 20})`);
+
+      legendItems.append('circle')
+        .attr('cx', 10)
+        .attr('cy', 10)
+        .attr('r', d => countScale(d))
+        .style('fill', d => legendColorScale(d));
+
+      legendItems.append('text')
+        .attr('x', 30)
+        .attr('y', 10)
+        .attr('dy', '0.35em')
+        .text(d => d);
     }
 
     document.addEventListener('DOMContentLoaded', function () {

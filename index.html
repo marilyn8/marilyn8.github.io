@@ -103,7 +103,16 @@
     <svg id="bubble-chart" width="700" height="555"></svg>
   </div>
 
-  <svg id="legend" width="200" height="200"></svg>
+  <svg id="legend" width="200" height="200">
+    <defs>
+      <linearGradient id="bubble-legend-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#363b4e" />
+        <stop offset="100%" stop-color="#927fbf" />
+      </linearGradient>
+    </defs>
+    <g id="legend-items"></g>
+    <g id="legend-line"></g>
+  </svg>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
@@ -202,7 +211,8 @@
         .style('font-size', 16 + "px")
         .text(d => d.name);
 
-      const legendItems = svgLegend.selectAll('.legend-item')
+      const legendItems = svg.selectAll('#legend-item')
+        .selectAll('.legend-item')
         .data(legendColorScale.ticks(5))
         .enter()
         .append('g')
@@ -210,16 +220,26 @@
         .attr('transform', (d, i) => 'translate(0, ${i * 20})');
 
       legendItems.append('circle')
-        .attr('cx', 10)
-        .attr('cy', 10)
-        .attr('r', d => countScale(d))
-        .style('fill', d => legendColorScale(d));
+        .attr('x', 10)
+        .attr('y', 10)
+        .attr('width', 20)
+        .attr('height', 10)
+        .style('fill', d => 'url(#bubble-legend-gradient)');
 
       legendItems.append('text')
-        .attr('x', 30)
-        .attr('y', 10)
+        .attr('x', 35)
+        .attr('y', 15)
         .attr('dy', '0.35em')
         .text(d => d);
+
+      const legendLine = svg.select('#legend-line')
+        .append('line')
+        .attr('x1', 10) 
+        .attr('y1', 120) 
+        .attr('x2', 10)  
+        .attr('y2', 160)  
+        .style('stroke', 'black')
+        .style('stroke-width', '2');
     }
 
     document.addEventListener('DOMContentLoaded', function () {

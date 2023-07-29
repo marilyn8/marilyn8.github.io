@@ -103,6 +103,8 @@
     <svg id="bubble-chart" width="700" height="555"></svg>
   </div>
 
+  <svg id="legend" width="200" height="200"></svg>
+
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
    
@@ -116,6 +118,10 @@
       .style('background-color', 'white')
       .style('padding', '5px')
       .style('border', '1px solid #ccc');
+
+    const svgLegend = d3.select('#legend')
+      .attr('width', 200)
+      .attr('height', 200);
 
     d3.csv('2022_pop.csv')
       .then(function(data) {

@@ -148,6 +148,10 @@
       const colorScale = d3.scaleLinear()
         .domain([d3.max(data, d => d.count), d3.min(data, d => d.count)])
         .range(['#363b4e', '#927fbf']);
+
+      const legendColorScale = d3.scaleSqrt()
+        .domain([0, d3.max(data, d => d.count)])
+        .range(['#363b4e', '#927fbf']);
    
       const simulation = d3.forceSimulation(data)
         .force('x', d3.forceX(width / 2))

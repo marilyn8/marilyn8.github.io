@@ -66,13 +66,11 @@
       position: relative;
     }
     
-    .y-axis-label {
-      font-size: 14px;
+    .y-axis-label-container {
       position: absolute;
-      lnie-height: 1.2;
       top: 50%;
       left: 260px;
-      transform: rotate(-90deg);
+      transform: rotate(-90deg) translateY(-50%);
     }
   </style>
 
@@ -99,10 +97,11 @@
   <br><br><br><br>
   
   <div class="chart-container">
-    <div id="y-axis-label">Count</div>
     <svg id="line-chart" width="800" height="500"></svg>
   </div>
-
+<div class="y-axis-label-container">
+  <span style="font-size: 14px;">Count</span>
+</div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
 

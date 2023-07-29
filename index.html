@@ -116,6 +116,8 @@
       .style('padding', '5px')
       .style('border', '1px solid #ccc');
 
+    let data;
+
     function createBubbleChart(data) {
       const svg = d3.select('#bubble-chart');
       const width = +svg.attr('width');
@@ -179,12 +181,14 @@
         .text(d => d.name);
     }
     
-    d3.csv('top10.csv').then(function(data) {
-      data.forEach(function(d) {
+    d3.csv('top10.csv').then(function(csvData) {
+      csvData.forEach(function(d) {
         d.Year = +d.Year;
         d.Count = +d.Count;
       });
 
+      data = csvData;
+      
       const countScale = d3.scaleSqrt()
         .domain([0, d3.max(data, d => d.count)])
         .range([5, 90]);
@@ -212,16 +216,7 @@
     .catch(function(error) {
       console.log('Error loading the data:', error);
     });
-      
-    document.addEventListener('DOMContentLoaded', function () {
-      if (navigator.userAgentData && navigator.userAgentData.platform) {
-        const platform = navigator.userAgentData.platform;
-        console.log('Platform:', platform);
-      } else {
-        console.log('Fallback: No access to platform information.');
-      }
-    });
-    
+
     function updateChart(selectedYear) {
         const filteredData = data.filter(d => d.Year === selectedYear);
 
@@ -245,10 +240,14 @@
             tooltip.style('opacity', 0);
           });
 
-        bubbles.merge(newBubbles)
-          .attr('cx', d => Math.random() * width)
-        .attr('cy', d => Math.random() * height)
-        .attr('r', d => countScale(d.count));
+        const mergedBubbles = newbubbles.merge(bubbles);
+      
+        mergedBubles
+          .transition()
+          .duration(500)
+          .attr('cx', d => countScale(d.Count) + Math.random() * (width - 2 * countScale(d.Count)))
+          .attr('cy', d => countScale(d.Count) + Math.random() * (height - 2 * countScale(d.Count)))
+          .attr('r', d => countScale(d.count));
       }
     
   </script>

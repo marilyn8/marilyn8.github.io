@@ -98,11 +98,16 @@
   <br><br><br><br>
   
   <div class="chart-container">
-    <svg id="line-chart" width="800" height="500"></svg>
+    <svg width="800" height="600">
+      <g transform="translate(50, 50)"> 
+        <g class="y-axis-label-container" transform="rotate(-90)">
+          <text x="-250" y="20" text-anchor="middle" style="font-size: 14px;">Count</text>
+        </g>
+        <g class="line-chart" transform="translate(60, 0)">
+        </g>
+      </g>
+    </svg>
   </div>
-<div class="y-axis-label-container">
-  <span>Count</span>
-</div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
 

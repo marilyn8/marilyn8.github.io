@@ -87,10 +87,6 @@
       dominant-baseline: middle;
     }
 
-    #legend-group {
-      transform: translate(0%, 50%);
-    }
-    
   </style>
 
   <meta http-equiv="Cache-Control" content="max-age=600">
@@ -116,14 +112,13 @@
   <div class="chart-container">
     <svg id="bubble-chart" width="700" height="555"></svg>
     <svg id="legend" width="100" height="900">
-      <g id="legend-group">
     <defs>
       <linearGradient id="bubble-legend-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" stop-color="#927fbf" />
         <stop offset="100%" stop-color="#363b4e" />
       </linearGradient>
     </defs>
-    <rect x="30" y="100" width="30" height="400" fill="url(#bubble-legend-gradient)" />
+    <rect x="30" y="50" width="30" height="400" fill="url(#bubble-legend-gradient)" />
     <text x="60" y="90" text-anchor="middle" font-size="14" fill="#927fbf">Lowest</text>
     <text x="60" y="520" text-anchor="middle" font-size="14" fill="#363b4e">Highest</text>
   </svg>

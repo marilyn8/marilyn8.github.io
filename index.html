@@ -124,8 +124,8 @@
         </linearGradient>
       </defs>
       <rect x="30" y="20" width="30" height="400" fill="url(#bubble-legend-gradient)" />
-      <text x="70" y="40" text-anchor="left" font-size="14" fill="#927fbf">Lowest</text>
-      <text x="70" y="410" text-anchor="left" font-size="14" fill="#363b4e">Highest</text>
+      <text x="70" y="30" text-anchor="left" font-size="14" fill="#927fbf">Lowest</text>
+      <text x="70" y="417" text-anchor="left" font-size="14" fill="#363b4e">Highest</text>
     </svg>
   </div>
 
@@ -260,7 +260,7 @@
       d3.select('#legend').attr('height', legendHeight);
 
       const legendGroup = d3.select('#legend-group');
-      legendGroup.attr('transform', `translate(0, ${legendHeight / 2})`);
+      legendGroup.attr('transform', 'translate(0, calc(${legendHeight / 2}px - 50px))`);
     }
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">

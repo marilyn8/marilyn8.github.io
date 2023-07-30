@@ -255,6 +255,11 @@
         .style('stroke', 'black')
         .style('stroke-width', '2');
 
+      const legendHeight = height;
+      d3.select('#legend').attr('height', legendHeight);
+
+      const legendGroup = d3.select('#legend-group');
+      legendGroup.attr('transform', `translate(0, ${legendHeight / 2})`);
     }
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">

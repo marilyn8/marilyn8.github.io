@@ -124,9 +124,9 @@
         </linearGradient>
       </defs>
       <rect x="30" y="20" width="30" height="400" fill="url(#bubble-legend-gradient)" />
-      <text x="0" y="5" text-anchor="left" font-size="14.5" fill="#000">Name Count</text>
-      <text x="70" y="34" text-anchor="left" font-size="14" fill="#927fbf">Lowest</text>
-      <text x="70" y="417" text-anchor="left" font-size="14" fill="#363b4e">Highest</text>
+      <text x="1" y="7" text-anchor="left" font-size="14" fill="#000">Name Count</text>
+      <text x="70" y="34" text-anchor="left" font-size="13" fill="#927fbf">Lowest</text>
+      <text x="70" y="417" text-anchor="left" font-size="13" fill="#363b4e">Highest</text>
       </g>
     </svg>
   </div>
@@ -227,7 +227,7 @@
         .style('stroke', 'black') 
         .style('stroke-width', '1px') 
         .style('paint-order', 'stroke fill')
-        .style('font-size', 17 + "px")
+        .style('font-size', 16 + "px")
         .text(d => d.name);
 
       const legendItems = svgLegend.select('#legend-items')

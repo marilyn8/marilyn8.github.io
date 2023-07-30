@@ -228,32 +228,33 @@
         .text(d => d.name);
 
       const legendItems = svgLegend.select('#legend-items')
-      .selectAll('.legend-item')
-      .data(legendColorScale.ticks(5))
-      .enter()
-      .append('g')
-      .attr('class', 'legend-item')
-      .attr('transform', (d, i) => `translate(10, ${i * 30})`);
+        .selectAll('.legend-item')
+        .data(legendColorScale.ticks(5))
+        .enter()
+        .append('g')
+        .attr('class', 'legend-item')
+        .attr('transform', (d, i) => `translate(10, ${i * 30})`);
 
-    legendItems.append('rect')
-      .attr('width', 20)
-      .attr('height', 10)
-      .style('fill', d => 'url(#bubble-legend-gradient)');
+      legendItems.append('rect')
+        .attr('width', 30)
+        .attr('height', 555)
+        .style('fill', d => 'url(#bubble-legend-gradient)');
 
-    legendItems.append('text')
-      .attr('x', 25)
-      .attr('y', 7)
-      .attr('dy', '0.35em')
-      .text(d => d);
+      legendItems.append('text')
+        .attr('x', 25)
+        .attr('y', 7)
+        .attr('dy', '0.35em')
+        .text(d => d);
 
-    const legendLine = svgLegend.select('#legend-line')
-      .append('line')
-      .attr('x1', 10)
-      .attr('y1', 120)
-      .attr('x2', 10)
-      .attr('y2', 160)
-      .style('stroke', 'black')
-      .style('stroke-width', '2');
+      const legendLine = svgLegend.select('#legend-line')
+        .append('line')
+        .attr('x1', 10)
+        .attr('y1', 120)
+        .attr('x2', 10)
+        .attr('y2', 160)
+        .style('stroke', 'black')
+        .style('stroke-width', '2');
+
     }
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">

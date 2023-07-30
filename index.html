@@ -74,7 +74,7 @@
       position: absolute;
       top: 50%;
       right: 20px;
-      transform: translate(0%, 50%);
+      transform: translateY(-50%);
       font-family: Arial, sans-serif;
     }
 
@@ -85,6 +85,10 @@
     #legend-text {
       font-size:14px;
       dominant-baseline: middle;
+    }
+
+    #legend-group {
+      transform: translate(0%, 50%);
     }
     
   </style>
@@ -112,6 +116,7 @@
   <div class="chart-container">
     <svg id="bubble-chart" width="700" height="555"></svg>
     <svg id="legend" width="100" height="900">
+      <g id="legend-group">
     <defs>
       <linearGradient id="bubble-legend-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" stop-color="#927fbf" />

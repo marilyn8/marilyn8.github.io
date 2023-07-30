@@ -78,13 +78,13 @@
       font-family: Arial, sans-serif;
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
+    #legend-item {
+      stroke-width: 20;
     }
 
-    .legend-item rect {
-      margin-right: 5px;
+    #legend-text {
+      font-size:14px;
+      dominant-baseline: middle;
     }
     
   </style>
@@ -116,12 +116,13 @@
   <svg id="legend" width="100" height="400">
     <defs>
       <linearGradient id="bubble-legend-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#363b4e" />
-        <stop offset="100%" stop-color="#927fbf" />
+        <stop offset="0%" stop-color="#927fbf" />
+        <stop offset="100%" stop-color="#363b4e" />
       </linearGradient>
     </defs>
-    <g id="legend-items"></g>
-    <g id="legend-line"></g>
+    <line id="legend-line" x1="0" y1="0" x2="0" y2="100%" stroke="url(#bubble-legend-gradient)" />
+    <text id="legend-text" x="15" y="10">Lowest</text>
+    <text id="legend-text" x="15" y="90">Highest</text>
   </svg>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>

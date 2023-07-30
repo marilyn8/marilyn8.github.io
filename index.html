@@ -262,7 +262,7 @@
       d3.select('#legend').attr('height', legendHeight);
 
       const legendGroup = d3.select('#legend-group');
-      legendGroup.attr('transform', 'translate(0, calc(${legendHeight / 2}px - 50px))`);
+      legendGroup.attr('transform', 'translate(0, ${legendHeight / 2})');
     }
   </script>
   <meta http-equiv="Cache-Control" content="max-age=600">

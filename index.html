@@ -135,7 +135,7 @@
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
-   
+    
     const tooltip = d3
       .select('body')
       .append('div')
@@ -168,6 +168,16 @@
       const svg = d3.select('#bubble-chart');
       const width = +svg.attr('width');
       const height = +svg.attr('height');
+
+      // Zoom
+    const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on('zoom', () => {
+          svgContainer.attr('transform', d3.event.transform);
+        });
+    
+    const svgContainer = d3.select('#chart-container-svg')
+        .call(zoom);
 
       const countScale = d3.scaleSqrt()
         .domain([0, d3.max(data, d => d.count)])
